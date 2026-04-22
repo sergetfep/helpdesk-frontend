@@ -1,4 +1,4 @@
-name: Netology AHJ
+name: CI
 
 on:
   push:
