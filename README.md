@@ -4,8 +4,10 @@ Frontend-часть для задания **HelpDesk**.
 
 Бейджик сборки: [![CI](https://github.com/sergetfep/helpdesk-frontend/actions/workflows/web.yml/badge.svg?branch=main)](https://github.com/sergetfep/helpdesk-frontend/actions/workflows/web.yml)
 
+## Деплой
 
-Ссылка на Github Pages: [HelpDesk: Frontend](https://sergetfep.github.io/helpdesk-frontend/)
+- Frontend опубликован на GitHub Pages: [HelpDesk](https://sergetfep.github.io/helpdesk-frontend/)
+- Backend развёрнут на [Railway](https://railway.com/). Исходники [здесь](https://github.com/sergetfep/helpdesk-backend)
 
 ## Запуск
 
@@ -14,7 +16,7 @@ npm i
 npm start
 ```
 
-По умолчанию Frontend отправляет запросы на `http://localhost:7070`.
+По умолчанию Frontend отправлял запросы на `http://localhost:7070`.
 
 ## Что реализовано
 
