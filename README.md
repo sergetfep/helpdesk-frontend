@@ -16,7 +16,7 @@ npm i
 npm start
 ```
 
-По умолчанию Frontend отправлял запросы на `http://localhost:7070`.
+Изначально Frontend отправлял запросы на `http://localhost:7070`.
 
 ## Что реализовано
 
