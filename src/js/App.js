@@ -89,11 +89,30 @@ export default class App {
                 data-action="status"
                 aria-label="Сменить статус"
               ></button>
+
               <div class="ticket__name" data-action="details">${ticket.name}</div>
+
               <div class="ticket__date">${formatDate(ticket.created)}</div>
-              <button class="ticket__action" type="button" data-action="edit" aria-label="Редактировать">✎</button>
-              <button class="ticket__action" type="button" data-action="delete" aria-label="Удалить">×</button>
+
+              <button
+                class="ticket__action"
+                type="button"
+                data-action="edit"
+                aria-label="Редактировать"
+              >
+                ✎
+              </button>
+
+              <button
+                class="ticket__action"
+                type="button"
+                data-action="delete"
+                aria-label="Удалить"
+              >
+                ×
+              </button>
             </div>
+
             <div class="ticket__details"></div>
           </div>
         `,
@@ -116,6 +135,7 @@ export default class App {
     this.openModal(`
       <div class="modal">
         <h2 class="modal__title">${title}</h2>
+
         <form class="ticket-form">
           <label class="modal__label" for="ticket-name">Краткое описание</label>
           <input
@@ -155,17 +175,32 @@ export default class App {
         return;
       }
 
+      if (
+        ticket &&
+        name === ticket.name &&
+        description === (ticket.description || '')
+      ) {
+        this.closeModal();
+        return;
+      }
+
       const payload = { name, description };
 
       try {
         if (ticket) {
-          await this.api.updateTicket(ticket.id, payload);
+          const updatedTicket = await this.api.updateTicket(ticket.id, payload);
+          const index = this.tickets.findIndex((item) => item.id === ticket.id);
+
+          if (index !== -1) {
+            this.tickets[index] = updatedTicket;
+          }
         } else {
-          await this.api.createTicket(payload);
+          const createdTicket = await this.api.createTicket(payload);
+          this.tickets.push(createdTicket);
         }
 
         this.closeModal();
-        await this.loadTickets();
+        this.renderTickets();
       } catch {
         alert('Не удалось сохранить тикет');
       }
@@ -185,11 +220,16 @@ export default class App {
     this.openModal(`
       <div class="modal">
         <h2 class="modal__title">Удалить тикет</h2>
-        <p class="modal__text">Вы уверены, что хотите удалить тикет? Это действие нельзя отменить.</p>
+
+        <p class="modal__text">
+          Вы уверены, что хотите удалить тикет? Это действие нельзя отменить.
+        </p>
 
         <div class="modal__actions">
           <button class="button" type="button" data-action="close-modal">Отмена</button>
-          <button class="button button_danger" type="button" data-action="confirm-delete">Удалить</button>
+          <button class="button button_danger" type="button" data-action="confirm-delete">
+            Удалить
+          </button>
         </div>
       </div>
     `);
@@ -201,8 +241,10 @@ export default class App {
     confirmButton.addEventListener('click', async () => {
       try {
         await this.api.deleteTicket(id);
+        this.tickets = this.tickets.filter((item) => item.id !== id);
+
         this.closeModal();
-        await this.loadTickets();
+        this.renderTickets();
       } catch {
         alert('Не удалось удалить тикет');
       }
@@ -229,7 +271,6 @@ export default class App {
 
     try {
       await this.api.updateTicket(id, { status: nextStatus });
-
       ticket.status = nextStatus;
       statusButton.classList.toggle('ticket__status_done', nextStatus);
     } catch {
