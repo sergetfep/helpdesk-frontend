@@ -7,7 +7,7 @@ Frontend-часть для задания **HelpDesk**.
 ## Деплой
 
 - Frontend опубликован на GitHub Pages: [HelpDesk](https://sergetfep.github.io/helpdesk-frontend/)
-- Backend развёрнут на [Railway]([https://railway.com/](https://chat-backend-production-3fb4.up.railway.app). Исходники [здесь](https://github.com/sergetfep/helpdesk-backend)
+- Backend развёрнут на [Railway](https://chat-backend-production-3fb4.up.railway.app). Исходники [здесь](https://github.com/sergetfep/helpdesk-backend)
 
 ## Запуск
 
